@@ -1,0 +1,29 @@
+table.prt{
+    border-collapse:collapse;
+}
+table.prt th{
+    border:2px solid black;
+    width:200px;
+}
+table.prt td{
+    border:1px solid black;
+    text-align:center;
+}
+td.red{
+    background-color:pink;
+}
+td.blue{
+    background-color:rgb(131, 131, 230);
+}
+.scr{
+    @media print{
+        display: none;
+    }
+}
+*{
+    font-size : 19px;
+}
+.custom-radio {
+    width: 30px;
+    height: 30px;
+}
