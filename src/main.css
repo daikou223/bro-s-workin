@@ -15,9 +15,31 @@ td.red{
 td.blue{
     background-color:rgb(131, 131, 230);
 }
-.scr{
-    @media print{
+button{
+    background-color:rgb(206, 201, 201);
+    border: 0.5px solid black;
+    width:50px;
+    height:35px;
+    margin:1px;
+}
+.non{
+    background-color:yellow;
+    font-size:15px;
+}
+@media screen {
+    td{
+        height:45px;
+    }
+}
+@media print{
+    .scr{
         display: none;
+    }
+    td.red{
+        background-color:pink !important;
+    }
+    td.blue{
+        background-color:rgb(131, 131, 230) !important;
     }
 }
 *{

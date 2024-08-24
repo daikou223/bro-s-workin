@@ -10,34 +10,44 @@ function Select(){
     var tbl = [];
     var days = [];
     const chan = function(n,v){
+        let bebut = document.getElementById(`${n}${select[n]}`);
+        bebut.style.backgroundColor = "rgb(206, 201, 201)";
         const newSelect = [...select];
         newSelect[n] = v;
+        let afbut = document.getElementById(`${n}${v}`);
+        afbut.style.backgroundColor = "yellow";
+        setSelect(newSelect);
+    }
+    const chang = function(v){
+        const newSelect = [...select];
+        newSelect[31] = v;
         setSelect(newSelect);
     }
     for(let i = 0;i<31;i++){
         items.push(
         <tr key = {i}>
-        <td>{i+1}</td><td><input type = "radio" name = {i} value = "1"onChange={()=>chan(i,1)}/>A</td>
-        <td><input type = "radio" name = {i}value = "2" onChange={()=>chan(i,2)}/>B</td>
-        <td><input type = "radio" name = {i}value = "3" onChange={()=>chan(i,3)}/>C</td>
-        <td><input type = "radio" name = {i}value = "4"onChange={()=>chan(i,4)}/>D</td>
-        <td><input type = "radio" name = {i}value = "5"onChange={()=>chan(i,5)}/>E</td>
-        <td><input type = "radio" name = {i}value = "6"onChange={()=>chan(i,6)}/>F</td>
-        <td><input type = "radio" name = {i}value = "7"onChange={()=>chan(i,7)}/>夜</td>
-        <td><input type = "radio" name = {i}value = "0"onChange={()=>chan(i,0)}/>なし</td>
+        <td>{i+1}</td><td><button onClick={()=>chan(i,1)} id={`${i}1`} >A</button></td>
+        <td><button onClick={()=>chan(i,2)}id={`${i}2`}>B</button></td>
+        <td><button onClick={()=>chan(i,3)}id={`${i}3`}>C</button></td>
+        <td><button onClick={()=>chan(i,4)}id={`${i}4`}>D</button></td>
+        <td><button onClick={()=>chan(i,5)}id={`${i}5`}>E</button></td>
+        <td><button onClick={()=>chan(i,6)}id={`${i}6`}>F</button></td>
+        <td><button onClick={()=>chan(i,7)}id={`${i}7`}>夜</button></td>
+        <td><button onClick={()=>chan(i,0)}id={`${i}0`} class="non">なし</button></td>
         </tr>);
+        console.log(items[i]);
     }
     days.push(
         <tr>
-        <td>一日の曜日</td><td><input type = "radio" name = "31" value = "1"onChange={()=>chan(31,1)}/>月</td>
-        <td><input type = "radio" name = "31"value = "2" onChange={()=>chan(31,2)}/>火</td>
-        <td><input type = "radio" name = "31"value = "3" onChange={()=>chan(31,3)}/>水</td>
-        <td><input type = "radio" name = "31"value = "4"onChange={()=>chan(31,4)}/>木</td>
-        <td><input type = "radio" name = "31"value = "5"onChange={()=>chan(31,5)}/>金</td>
-        <td><input type = "radio" name = "31"value = "6"onChange={()=>chan(31,6)}/>土</td>
-        <td><input type = "radio" name = "31"value = "0"onChange={()=>chan(31,0)}/>日</td>
+        <td>一日の曜日</td><td><input type = "radio" name = "31" value = "1"onChange={()=>chang(1)}/>月</td>
+        <td><input type = "radio" name = "31"value = "2" onChange={()=>chang(2)}/>火</td>
+        <td><input type = "radio" name = "31"value = "3" onChange={()=>chang(3)}/>水</td>
+        <td><input type = "radio" name = "31"value = "4"onChange={()=>chang(4)}/>木</td>
+        <td><input type = "radio" name = "31"value = "5"onChange={()=>chang(5)}/>金</td>
+        <td><input type = "radio" name = "31"value = "6"onChange={()=>chang(6)}/>土</td>
+        <td><input type = "radio" name = "31"value = "0"onChange={()=>chang(0)}/>日</td>
         </tr>);
-    var you = ["日","月","火","水","木","金","土"];
+    var you = ["昼","月","火","水","木","金","土"];
     for(let j = 0;j<31;j++){
         console.log((select[31]+j)%7,select[j]);
         if((select[31]+j)%7>=1 && (select[31]+j)%7<=5){
@@ -68,14 +78,21 @@ function Select(){
             <table>
                 {days}
             </table>
+            </div>
+            <table>
+                <tr><td>
+            <div className = "scr">
             <table>
             {items}
             </table>
-            {select}
             </div>
+            </td><td>
             <table className = "prt">
                 <tr><th>日付</th><th>曜日</th><th>駅出発</th><th>開始</th><th>終了</th><th>帰宅</th></tr>
             {tbl}
+            </table>
+            </td>
+            </tr>
             </table>
         </div>
     )
