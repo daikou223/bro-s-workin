@@ -12,6 +12,9 @@ table.prt td{
 table.prt th.memo{
     width:150px;
 }
+td.prev{
+    width:70px;
+}
 .red{
     background-color:pink;
 }
@@ -35,6 +38,9 @@ button{
 @media screen {
     td{
         height:45px;
+    }
+    .prt{
+        display:none;
     }
 }
 @media print{
