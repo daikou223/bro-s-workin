@@ -5,10 +5,11 @@ function Select(){
     var items = [];
     const go = ["-","5:36","6:09","6:09","10:03","11:11","11:11","19:38"];
     const sta = ["-","6:30","7:00","7:00","11:00","12:00","12:00","21:00"];
-    const end = ["-","15:30","16:00","16:00","20:00","21:00","21:00","翌日7:00"];
-    const home = ["-","16:20","16:59","16:59","21:04","21:53","21:53","翌日7:55"];
+    const end = ["-","15:30","16:00","16:00","20:00","21:00","21:00","翌7:00"];
+    const home = ["-","16:20","16:59","16:59","21:04","21:53","21:53","翌7:55"];
     var tbl = [];
     var days = [];
+    let scr = [];
     const chan = function(n,v){
         let bebut = document.getElementById(`${n}${select[n]}`);
         bebut.style.backgroundColor = "rgb(206, 201, 201)";
@@ -53,21 +54,21 @@ function Select(){
         if((select[31]+j)%7>=1 && (select[31]+j)%7<=5){
         tbl.push(
             <tr>
-                <td>{j+1}</td><td>{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td>
+                <td>{j+1}</td><td>{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
             </tr>
         )
     }
     else if((select[31]+j)%7===0){
         tbl.push(
             <tr>
-                <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td>
+                <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
             </tr>
         )
     }
     else if((select[31]+j)%7===6){
         tbl.push(
             <tr>
-                <td>{j+1}</td><td className = "blue">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td>
+                <td>{j+1}</td><td className = "blue">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
             </tr>
         )
     }
@@ -88,12 +89,13 @@ function Select(){
             </div>
             </td><td>
             <table className = "prt">
-                <tr><th>日付</th><th>曜日</th><th>駅出発</th><th>開始</th><th>終了</th><th>帰宅</th></tr>
+                <tr><th>日付</th><th>曜日</th><th>駅出発</th><th>開始</th><th>終了</th><th>帰宅</th><th className="memo">メモ</th></tr>
             {tbl}
             </table>
             </td>
             </tr>
             </table>
+            <button className = "print"onClick={()=>window.print()}>印刷</button>
         </div>
     )
 }

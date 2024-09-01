@@ -3,17 +3,23 @@ table.prt{
 }
 table.prt th{
     border:2px solid black;
-    width:200px;
+    width:75px;
 }
 table.prt td{
     border:1px solid black;
     text-align:center;
 }
-td.red{
+table.prt th.memo{
+    width:150px;
+}
+.red{
     background-color:pink;
 }
 td.blue{
     background-color:rgb(131, 131, 230);
+}
+.print{
+    width:200px;
 }
 button{
     background-color:rgb(206, 201, 201);
@@ -40,6 +46,12 @@ button{
     }
     td.blue{
         background-color:rgb(131, 131, 230) !important;
+    }
+    .print{
+        display:none;
+    }
+    *{
+        -webkit-print-color-adjust: exact;
     }
 }
 *{
