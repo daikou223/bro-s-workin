@@ -16,13 +16,30 @@ td.prev{
     width:70px;
 }
 .red{
-    background-color:pink;
+    background-color:rgb(245, 160, 174);
 }
 td.blue{
-    background-color:rgb(131, 131, 230);
+    background-color:rgb(169, 169, 235);
 }
 .print{
     width:200px;
+}
+.message{
+    background-color:rgb(223, 168, 168);
+    padding:1px;
+    border-radius:10px;
+    margin-bottom:30px
+}
+.date{
+    background-color:rgb(168, 196, 223);
+    padding:1px;
+    border-radius:10px;
+    margin:3px;
+}
+.date>p{
+    margin-left:20px;
+    margin-top:3px;
+    margin-bottom:3px;
 }
 button{
     background-color:rgb(206, 201, 201);
@@ -57,6 +74,9 @@ button{
     }
     *{
         -webkit-print-color-adjust: exact;
+    }
+    .message{
+        display:none;
     }
 }
 *{

@@ -4,7 +4,7 @@ function Select(){
     const[select,setSelect] = useState(Array(32).fill(8));
     useEffect(()=>{
         const newSelect = [...select];
-        newSelect[31] = 0;
+        newSelect[31] = 8;
         setSelect(newSelect);
     },[])
     var items = [];
@@ -94,12 +94,24 @@ function Select(){
             okNg = window.confirm(als.join("日 ")+"日が選択されていませんがよろしいですか？");
             console.log(okNg);
         };
+        if(select[31] === 8){
+            okNg = window.confirm("1日の曜日が選択されていません(デフォルトは月)") && okNg;
+            console.log(okNg);
+        };
         if(okNg){
             window.print();
         }
     }
     return(
         <div className = "Select">
+            <div className = "message">
+                <p>アップデート情報</p>
+                <div class = "date">
+                <div>2024/10/11</div>
+                <p>一日の曜日が選択されてない場合に確認画面の表示．</p>
+                <p>アップデート情報の表示</p>
+                </div>
+            </div>
             <div className = "scr">
                 {days}
             </div>
