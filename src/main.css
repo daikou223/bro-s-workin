@@ -75,6 +75,9 @@ button{
     *{
         -webkit-print-color-adjust: exact;
     }
+    .wide{
+        width:150px;
+    }
     .message{
         display:none;
     }
