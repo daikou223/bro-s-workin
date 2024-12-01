@@ -74,6 +74,7 @@ button{
     }
     *{
         -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
     .wide{
         width:150px;
