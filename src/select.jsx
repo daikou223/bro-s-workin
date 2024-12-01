@@ -139,7 +139,7 @@ function Select(){
             </table>
             </div>
             <table className = "prt">
-                <tr><th className = "day">日付</th><th className = "day">曜日</th><th>出発</th><th>開始</th><th>終了</th><th>帰宅</th><th className="memo">メモ</th><th className="titi">父勤務</th></tr>
+                <tr><th className = "day">日</th><th className = "day">曜</th><th>出発</th><th>開始</th><th>終了</th><th>帰宅</th><th className="memo">メモ</th><th className="titi">父勤務</th></tr>
             {tbl}
             </table>
         </div>
