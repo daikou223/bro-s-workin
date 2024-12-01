@@ -63,27 +63,27 @@ function Select(){
             if((select[31]+j)%7>=1 && (select[31]+j)%7<=5){ /* 平日ならば */
                 tbl.push(
                     <tr>
-                        <td>{j+1}</td><td>{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
+                        <td>{j+1}</td><td>{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td><td><Titi/></td>
                     </tr>
                 )
             }else if((select[31]+j)%7===0){ /* 日ならば */
                 if(select[j] <= 6 && select[j] >= 1){
                 tbl.push(
                     <tr>
-                        <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td>お昼忘れずに</td>
+                        <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td>お昼忘れずに</td><td><Titi/></td>
                     </tr>
                 )}
                 else{
                     tbl.push(
                         <tr>
-                            <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
+                            <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td><td><Titi/></td>
                         </tr>
                     )
                 }
             }else if((select[31]+j)%7===6){ /* 土ならば */
                 tbl.push(
                     <tr>
-                        <td>{j+1}</td><td className = "blue">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
+                        <td>{j+1}</td><td className = "blue">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td><td><Titi/></td>
                     </tr>
                 )
             }
@@ -114,14 +114,14 @@ function Select(){
             <div className = "message">
                 <p>アップデート情報</p>
                 <div class = "date">
-                <div>2024/10/11</div>
-                <p>一日の曜日が選択されてない場合に確認画面の表示．</p>
-                <p>アップデート情報の表示</p>
-                </div>
-                <div class = "date">
                 <div>2024/11/22</div>
                 <p>通信費を払ったかどうかを追加</p>
                 <p>曜日を昼から日に変更し，メモにその旨を追加</p>
+                </div>
+                <div class = "date">
+                <div>2024/12/01</div>
+                <p>時刻の変更</p>
+                <p>父の出勤に対応</p>
                 </div>
             </div>
             <div className = "scr">
@@ -139,11 +139,18 @@ function Select(){
             </table>
             </div>
             <table className = "prt">
-                <tr><th>日付</th><th>曜日</th><th>家出発</th><th>開始</th><th>終了</th><th>帰宅</th><th className="memo">メモ</th></tr>
+                <tr><th className = "day">日付</th><th>曜日</th><th>出発</th><th>開始</th><th>終了</th><th>帰宅</th><th className="memo">メモ</th><th className="titi">父勤務</th></tr>
             {tbl}
             </table>
         </div>
         )
     }
 
+    function Titi(){
+        return(
+            <div>
+                O-Short O-Long O-無し
+            </div>
+        )
+    }
 export default Select

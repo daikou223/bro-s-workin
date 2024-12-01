@@ -3,7 +3,7 @@ table.prt{
 }
 table.prt th{
     border:2px solid black;
-    width:75px;
+    width:50px;
 }
 table.prt td{
     border:1px solid black;
@@ -11,6 +11,9 @@ table.prt td{
 }
 table.prt th.memo{
     width:150px;
+}
+table.prt th.titi{
+    width:250px;
 }
 td.prev{
     width:70px;
@@ -50,6 +53,9 @@ button{
 }
 .non{
     font-size:15px;
+}
+ul > li::marker{
+    content:"O";
 }
 @media screen {
     td{
