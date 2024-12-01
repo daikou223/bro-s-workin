@@ -1,9 +1,13 @@
 table.prt{
     border-collapse:collapse;
 }
-table.prt th{
+table.prt th:not(.day){
     border:2px solid black;
-    width:50px;
+    width:70px;
+}
+table.prt th.day{
+    border:2px solid black;
+    width:30px;
 }
 table.prt td{
     border:1px solid black;
