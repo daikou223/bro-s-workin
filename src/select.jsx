@@ -1,15 +1,26 @@
 import React,{useState,useEffect} from "react";
 import styles from './main.css';
+import axios from "axios";
 function Select(){
-    const[select,setSelect] = useState(Array(32).fill(8)); /* 選んだものを保管する */
+    const[select,setSelect] = useState(Array(32).fill(0)); /* 選んだものを保管する */
+    const today = new Date();
+    const monthLastDay = new Date(today.getFullYear(),today.getMonth()+2,0);
+    const monthFirstDay = new Date(today.getFullYear(),today.getMonth()+1,1);
     useEffect(()=>{
         const newSelect = [...select];
-        newSelect[31] = 8;   /* 曜日選択を8番にし，更新 */
+        newSelect[31] = monthFirstDay.getDay();   /* 曜日選択を8番にし，更新 */
         setSelect(newSelect);
     },[])
+    function formatTime(input) {
+        const parts = input.split(':');
+        const hours = parts[0].padStart(2, '0');
+        const minutes = (parts[1] || '00').padStart(2, '0');
+        const seconds = (parts[2] || '00').padStart(2, '0');
+        return `${hours}:${minutes}:${seconds}`;
+    }
     var items = []; /* ボタンオブジェクトを保管 */
-    const go = ["-","5:15","5:45","5:45","9:45","10:45","10:45","19:45"]; //各時刻を保管する
-    const sta = ["-","6:30","7:00","7:00","11:00","12:00","12:00","21:00"];
+    const go = ["-","5:15","5:45","5:45","9:45","10:45","10:45","19:15"]; //各時刻を保管する
+    const sta = ["-","6:30","7:00","7:00","11:00","12:00","12:00","20:30"];
     const end = ["-","15:30","16:00","16:00","20:00","21:00","21:00","翌7:00"];
     const home = ["-","16:40","17:10","17:10","21:10","22:10","22:10","翌8:10"];
     var tbl = []; /* テーブルの結果を保管する */
@@ -31,11 +42,11 @@ function Select(){
         newSelect[31] = v;
         setSelect(newSelect);
     }
-    for(let i = 0;i<31;i++){ /* ボタンを設置 */
+    for(let i = 0;i<monthLastDay.getDate();i++){ /* ボタンを設置 */
         items.push(
         <tr key = {i}>
         <td>{i+1}日</td>
-        <td className = "prev">{you[(select[31]+i)%7]}</td>
+        <td className = "prev">{you[(monthFirstDay.getDay()+i)%7]}</td>
         <td><button onClick={()=>chan(i,1)} id={`${i}1`} >A</button></td>
         <td><button onClick={()=>chan(i,2)}id={`${i}2`}>B</button></td>
         <td><button onClick={()=>chan(i,3)}id={`${i}3`}>C</button></td>
@@ -58,7 +69,7 @@ function Select(){
         <td><input type = "radio" name = "31"value = "0"onChange={()=>chang(0)}/>日</td>
         </tr>);
     /* 表を実態にする */
-    for(let j = 0;j<31;j++){
+    for(let j = 0;j<monthLastDay.getDate();j++){
         if(select[j] <= 7){ /* 入力されていないなら行を作らない */
             if((select[31]+j)%7>=1 && (select[31]+j)%7<=5){ /* 平日ならば */
                 tbl.push(
@@ -90,24 +101,31 @@ function Select(){
          }
     };
     function plt(){
-        let als = [];
-        let okNg = true;
-        for(let i = 0;i<31;i++){
-            if(select[i] == 8){
-                als.push(i+1)
+        window.print();
+        let querys = [];
+        let paramses = [];
+        for(let i = 0;i<monthLastDay.getDate();i++){
+            if(select[i] === 7){
+                querys.push("INSERT INTO `task`(`user_id`, `taskname`, `forgoto`, `date`, `start`, `end`, `memo`) VALUES (?,?,?,?,?,?,?)")
+                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),"23:59:59",""]);
+                let tommorw = new Date(monthFirstDay.getFullYear(),monthFirstDay.getMonth(),i+2)
+                querys.push("INSERT INTO `task`(`user_id`, `taskname`, `forgoto`, `date`, `start`, `end`, `memo`) VALUES (?,?,?,?,?,?,?)")
+                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(tommorw.getFullYear()).padStart(2,'0')}-${String(tommorw.getMonth()+1).padStart(2,'0')}-${String(tommorw.getDate()).padStart(2,'0')}`,"00:00:00","07:00:00",""]);
+            }
+            else if(select[i] != 0){
+                querys.push("INSERT INTO `task`(`user_id`, `taskname`, `forgoto`, `date`, `start`, `end`, `memo`) VALUES (?,?,?,?,?,?,?)")
+                paramses.push([2,"仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),formatTime(end[select[i]]),""]);
             }
         }
-        if(als.length != 0){
-            okNg = window.confirm(als.join("日 ")+"日が選択されていませんがよろしいですか？");
-            console.log(okNg);
-        };
-        if(select[31] === 8){
-            okNg = window.confirm("1日の曜日が選択されていません(デフォルトは月)") && okNg;
-            console.log(okNg);
-        };
-        if(okNg){
-            window.print();
-        }
+        console.log(querys,paramses);
+        axios.post(`https://fam-api-psi.vercel.app/api/month`,{
+            querys:querys,
+            paramses:paramses
+        }).then(()=>
+            console.log("成功")
+        ).catch(()=>
+            console.log("error")
+        )
     }
     return(
         <div className = "Select">
@@ -115,19 +133,17 @@ function Select(){
                 <p>アップデート情報</p>
                 <div class = "date">
                 <div>2024/11/22</div>
+                <p>曜日と日付範囲を自動化</p>
+                <p>入力内容を予定表に自動挿入</p>
+                </div>
+                <div class = "date">
+                <div>2024/11/22</div>
                 <p>通信費を払ったかどうかを追加</p>
                 <p>曜日を昼から日に変更し，メモにその旨を追加</p>
                 </div>
-                <div class = "date">
-                <div>2024/12/01</div>
-                <p>時刻の変更</p>
-                <p>父の出勤に対応</p>
-                </div>
             </div>
             <div className = "scr">
-                {days}
-            </div>
-            <div className = "scr">
+                {today.getMonth()+2}月分
             <table>
             {items}
             </table>
@@ -149,7 +165,7 @@ function Select(){
     function Titi(){
         return(
             <div>
-                O-Short O-Long O-無し
+                O-S O-L O-無
             </div>
         )
     }
