@@ -3,6 +3,7 @@ import styles from './main.css';
 import axios from "axios";
 function Select(){
     const[select,setSelect] = useState(Array(32).fill(0)); /* 選んだものを保管する */
+    const[buttonName,setButtonName] = useState("印刷");
     const today = new Date();
     const monthLastDay = new Date(today.getFullYear(),today.getMonth()+2,0);
     const monthFirstDay = new Date(today.getFullYear(),today.getMonth()+1,1);
@@ -101,7 +102,9 @@ function Select(){
          }
     };
     function plt(){
-        window.print();
+        setButtonName("保存中");
+        const printingButton = document.getElementById("print");
+        printingButton.disabled = true;
         let querys = [];
         let paramses = [];
         for(let i = 0;i<monthLastDay.getDate();i++){
@@ -121,18 +124,22 @@ function Select(){
         axios.post(`https://fam-api-psi.vercel.app/api/month`,{
             querys:querys,
             paramses:paramses
-        }).then(()=>
-            console.log("成功")
+        }).then(()=>{
+            console.log("成功");
+            window.print();
+            printingButton.disabled = false;
+            setButtonName("印刷");
+            }
         ).catch(()=>
             console.log("error")
-        )
+        );
     }
     return(
         <div className = "Select">
             <div className = "message">
                 <p>アップデート情報</p>
                 <div class = "date">
-                <div>2024/11/22</div>
+                <div>2025/01/26</div>
                 <p>曜日と日付範囲を自動化</p>
                 <p>入力内容を予定表に自動挿入</p>
                 </div>
@@ -148,7 +155,7 @@ function Select(){
             {items}
             </table>
             </div>
-            <button className = "print"onClick={()=>{plt()}}>印刷</button>
+            <button className = "print" id = "print" onClick={()=>{plt()}}>{buttonName}</button>
             <div className = "prt">
             <table>
                 <tr><td>通信費</td><td>だい</td><td className = "wide"></td><td>こう</td><td lassName = "wide"></td></tr>
@@ -165,7 +172,9 @@ function Select(){
     function Titi(){
         return(
             <div>
-                O-S O-L O-無
+                <a>O-S</a>
+                <a className = "Lmargin">O-L</a>
+                <a className = "Lmargin">O-無</a>
             </div>
         )
     }
