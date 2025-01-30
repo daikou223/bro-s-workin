@@ -62,6 +62,9 @@ button{
 ul > li::marker{
     content:"O";
 }
+.Lmargin{
+    margin-left:25px;
+}
 @media screen {
     td{
         height:45px;
