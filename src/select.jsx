@@ -121,34 +121,24 @@ function Select(){
             }
         }
         console.log(querys,paramses);
-        axios.post(`https://fam-api-psi.vercel.app/api/month`,{
-            querys:querys,
-            paramses:paramses
-        }).then(()=>{
-            console.log("成功");
-            window.print();
-            printingButton.disabled = false;
-            setButtonName("印刷");
+        for(let day = 0;day<querys.length/10+1;day++){
+            axios.post(`https://fam-api-psi.vercel.app/api/month`,{
+                querys:querys.slice(day*10,day*10+10),
+                paramses:paramses.slice(day*10,day*10+10)
+            }).then(()=>{
+                console.log("成功");
+                printingButton.disabled = false;
+                setButtonName("印刷");
+                }
+            ).catch((e)=>{
+                console.log("error",e);
             }
-        ).catch(()=>
-            console.log("error")
-        );
+            );
+        }
+        window.print();
     }
     return(
         <div className = "Select">
-            <div className = "message">
-                <p>アップデート情報</p>
-                <div class = "date">
-                <div>2025/01/26</div>
-                <p>曜日と日付範囲を自動化</p>
-                <p>入力内容を予定表に自動挿入</p>
-                </div>
-                <div class = "date">
-                <div>2024/11/22</div>
-                <p>通信費を払ったかどうかを追加</p>
-                <p>曜日を昼から日に変更し，メモにその旨を追加</p>
-                </div>
-            </div>
             <div className = "scr">
                 {today.getMonth()+2}月分
             <table>
