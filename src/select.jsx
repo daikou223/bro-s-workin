@@ -1,6 +1,14 @@
 import React,{useState,useEffect} from "react";
 import styles from './main.css';
 import axios from "axios";
+
+function sleep(waitMsec) {
+    var startMsec = new Date();
+  
+    // 指定ミリ秒間だけループさせる（CPUは常にビジー状態）
+    while (new Date() - startMsec < waitMsec);
+  }
+
 function Select(){
     const[select,setSelect] = useState(Array(32).fill(0)); /* 選んだものを保管する */
     const[buttonName,setButtonName] = useState("印刷");
@@ -127,15 +135,17 @@ function Select(){
                 paramses:paramses.slice(day*10,day*10+10)
             }).then(()=>{
                 console.log("成功");
-                printingButton.disabled = false;
-                setButtonName("印刷");
                 }
             ).catch((e)=>{
                 console.log("error",e);
             }
             );
+            sleep(1000);
         }
         window.print();
+        setButtonName("印刷");
+        printingButton.disabled = false;
+
     }
     return(
         <div className = "Select">
