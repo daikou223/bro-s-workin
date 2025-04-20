@@ -83,27 +83,27 @@ function Select(){
             if((select[31]+j)%7>=1 && (select[31]+j)%7<=5){ /* 平日ならば */
                 tbl.push(
                     <tr>
-                        <td>{j+1}</td><td>{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td><td><Titi/></td>
+                        <td>{j+1}</td><td>{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
                     </tr>
                 )
             }else if((select[31]+j)%7===0){ /* 日ならば */
                 if(select[j] <= 6 && select[j] >= 1){
                 tbl.push(
                     <tr>
-                        <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td>お昼忘れずに</td><td><Titi/></td>
+                        <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td>お昼忘れずに</td>
                     </tr>
                 )}
                 else{
                     tbl.push(
                         <tr>
-                            <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td><td><Titi/></td>
+                            <td>{j+1}</td><td className = "red">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
                         </tr>
                     )
                 }
             }else if((select[31]+j)%7===6){ /* 土ならば */
                 tbl.push(
                     <tr>
-                        <td>{j+1}</td><td className = "blue">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td><td><Titi/></td>
+                        <td>{j+1}</td><td className = "blue">{you[(select[31]+j)%7]}</td><td>{go[select[j]]}</td><td>{sta[select[j]]}</td><td>{end[select[j]]}</td><td>{home[select[j]]}</td><td></td>
                     </tr>
                 )
             }
@@ -162,20 +162,10 @@ function Select(){
             </table>
             </div>
             <table className = "prt">
-                <tr><th className = "day">日</th><th className = "day">曜</th><th>出発</th><th>開始</th><th>終了</th><th>帰宅</th><th className="memo">メモ</th><th className="titi">父勤務</th></tr>
+                <tr><th className = "day">日</th><th className = "day">曜</th><th>出発</th><th>開始</th><th>終了</th><th>帰宅</th><th className="memo">メモ</th></tr>
             {tbl}
             </table>
         </div>
-        )
-    }
-
-    function Titi(){
-        return(
-            <div>
-                <a>O-S</a>
-                <a className = "Lmargin">O-L</a>
-                <a className = "Lmargin">O-無</a>
-            </div>
         )
     }
 export default Select
