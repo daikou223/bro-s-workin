@@ -2,13 +2,6 @@ import React,{useState,useEffect} from "react";
 import styles from './main.css';
 import axios from "axios";
 
-function sleep(waitMsec) {
-    var startMsec = new Date();
-  
-    // 指定ミリ秒間だけループさせる（CPUは常にビジー状態）
-    while (new Date() - startMsec < waitMsec);
-  }
-
 function Select(){
     const[select,setSelect] = useState(Array(32).fill(0)); /* 選んだものを保管する */
     const[buttonName,setButtonName] = useState("印刷");
@@ -113,35 +106,27 @@ function Select(){
         setButtonName("保存中");
         const printingButton = document.getElementById("print");
         printingButton.disabled = true;
-        let querys = [];
         let paramses = [];
         for(let i = 0;i<monthLastDay.getDate();i++){
             if(select[i] === 7){
-                querys.push("INSERT INTO `task`(`user_id`, `taskname`, `forgoto`, `date`, `start`, `end`, `memo`) VALUES (?,?,?,?,?,?,?)")
-                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),"23:59:59",""]);
+                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),"23:59:59","",1]);
                 let tommorw = new Date(monthFirstDay.getFullYear(),monthFirstDay.getMonth(),i+2)
-                querys.push("INSERT INTO `task`(`user_id`, `taskname`, `forgoto`, `date`, `start`, `end`, `memo`) VALUES (?,?,?,?,?,?,?)")
-                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(tommorw.getFullYear()).padStart(2,'0')}-${String(tommorw.getMonth()+1).padStart(2,'0')}-${String(tommorw.getDate()).padStart(2,'0')}`,"00:00:00","07:00:00",""]);
+                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(tommorw.getFullYear()).padStart(2,'0')}-${String(tommorw.getMonth()+1).padStart(2,'0')}-${String(tommorw.getDate()).padStart(2,'0')}`,"00:00:00","07:00:00","",1]);
             }
             else if(select[i] != 0){
-                querys.push("INSERT INTO `task`(`user_id`, `taskname`, `forgoto`, `date`, `start`, `end`, `memo`) VALUES (?,?,?,?,?,?,?)")
-                paramses.push([2,"仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),formatTime(end[select[i]]),""]);
+                paramses.push([2,"仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),formatTime(end[select[i]]),"",1]);
             }
         }
-        console.log(querys,paramses);
-        for(let day = 0;day<querys.length/10+1;day++){
-            axios.post(`https://fam-api-psi.vercel.app/api/month`,{
-                querys:querys.slice(day*10,day*10+10),
-                paramses:paramses.slice(day*10,day*10+10)
-            }).then(()=>{
-                console.log("成功");
-                }
-            ).catch((e)=>{
-                console.log("error",e);
+        console.log(paramses);
+        axios.post(`https://fam-api-psi.vercel.app/api/month`,{
+            values:paramses
+        }).then(()=>{
+            console.log("成功");
             }
-            );
-            sleep(1000);
+        ).catch((e)=>{
+            console.log("error",e);
         }
+        );
         window.print();
         setButtonName("印刷");
         printingButton.disabled = false;
