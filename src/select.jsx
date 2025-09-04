@@ -109,14 +109,38 @@ function Select(){
         let paramses = [];
         for(let i = 0;i<monthLastDay.getDate();i++){
             if(select[i] === 7){
-                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),"23:59:59","",1]);
+                paramses.push({
+                    "user_id":2,
+                    "taskname":"夜勤仕事",
+                    "forgoto":formatTime("1:15"),
+                    "date":`${String(monthFirstDay.getFullYear()).padStart(4,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,
+                    "start":formatTime(sta[select[i]]),
+                    "end":"23:59:59",
+                    "memo":"",
+                    "isHome":1});
                 let tommorw = new Date(monthFirstDay.getFullYear(),monthFirstDay.getMonth(),i+2)
-                paramses.push([2,"夜勤仕事",formatTime("1:15"),`${String(tommorw.getFullYear()).padStart(2,'0')}-${String(tommorw.getMonth()+1).padStart(2,'0')}-${String(tommorw.getDate()).padStart(2,'0')}`,"00:00:00","07:00:00","",1]);
-            }
+                paramses.push({
+                    "user_id":2,
+                    "taskname":"夜勤仕事",
+                    "forgoto":formatTime("1:15"),
+                    "date":`${String(tommorw.getFullYear()).padStart(4,'0')}-${String(tommorw.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,
+                    "start":"00:00:00",
+                    "end":"07:00:00",
+                    "memo":"",
+                    "isHome":1});
+                }
             else if(select[i] != 0){
-                paramses.push([2,"仕事",formatTime("1:15"),`${String(monthFirstDay.getFullYear()).padStart(2,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,formatTime(sta[select[i]]),formatTime(end[select[i]]),"",1]);
+                 paramses.push({
+                    "user_id":2,
+                    "taskname":"仕事",
+                    "forgoto":formatTime("1:15"),
+                    "date":`${String(monthFirstDay.getFullYear()).padStart(4,'0')}-${String(monthFirstDay.getMonth()+1).padStart(2,'0')}-${String(i+1).padStart(2,'0')}`,
+                    "start":formatTime(sta[select[i]]),
+                    "end":formatTime(end[select[i]]),
+                    "memo":"",
+                    "isHome":1});
+                }
             }
-        }
         console.log(paramses);
         axios.post(`https://fam-api-psi.vercel.app/api/month`,{
             values:paramses
@@ -130,7 +154,6 @@ function Select(){
         window.print();
         setButtonName("印刷");
         printingButton.disabled = false;
-
     }
     return(
         <div className = "Select">
@@ -151,6 +174,6 @@ function Select(){
             {tbl}
             </table>
         </div>
-        )
-    }
+    )
+}
 export default Select
